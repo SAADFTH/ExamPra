@@ -14,22 +14,21 @@ function addEmployeeToTable(employe) {
     let telephone = $('<td>').text(employe.telephone);
     let departement = $('<td>').text(employe.departement);
     let actionTD = $('<td>');
-    let deleteButton = $('<button>');
     let editButton = $('<button>');
 
+    editButton.text('Modifier');
+    editButton.addClass('editButton btn btn-primary');
+    editButton.attr('onclick', 'openEditModal(event)');
+    actionTD.append(editButton);
+
+    let deleteButton = $('<button>');
     deleteButton.text('Supprimer');
-    deleteButton.addClass('deleteButton');
+    deleteButton.addClass('deleteButton btn btn-danger');
     deleteButton.attr('onclick', 'openModal(event)');
     actionTD.append(deleteButton);
 
-    let editActionTD = $('<td>');
-    editButton.text('Modifier');
-    editButton.addClass('editButton');
-    editButton.attr('onclick', 'editEmployee(event)');
-    editActionTD.append(editButton);
-
     let ligne = $('<tr>');
-    ligne.append(id, nom, prenom, telephone, departement, editActionTD, actionTD);
+    ligne.append(id, nom, prenom, telephone, departement, actionTD);
     $('#employeeTable tbody').append(ligne);
 }
 
@@ -76,16 +75,64 @@ function deleteEmploye(e) {
     };
 
     $.ajax({
-        url: 'http://localhost:8080/SupTechBackEnd/employes',
+        url: `http://localhost:8080/SupTechBackEnd/employes/${formData.id}`,
         type: 'DELETE',
         contentType: 'application/json',
         data: JSON.stringify(formData),
         success: function(response) {
             e.target.parentElement.parentElement.remove();
-            $("#confirmModal").modal("hide"); // Cacher le modal après avoir supprimé l'employé
+            $("#confirmModal").modal("hide");
         },
         error: function(xhr, status, error) {
             console.error('DELETE request failed:', error);
         }
     });
 }
+
+function openEditModal(e) {
+    const row = $(e.target).closest('tr');
+    const id = row.find('td').eq(0).text();
+    const nom = row.find('td').eq(1).text();
+    const prenom = row.find('td').eq(2).text();
+    const telephone = row.find('td').eq(3).text();
+    const departement = row.find('td').eq(4).text();
+
+    $("#editId").val(id);
+    $("#editNom").val(nom);
+    $("#editPrenom").val(prenom);
+    $("#editTelephone").val(telephone);
+    $("#editDepartement").val(departement);
+
+    $("#editModal").modal("show");
+    $("#saveEdit").off("click").on("click", () => {
+        saveEdit(row);
+    });
+}
+
+function saveEdit(row) {
+    let formData = {
+        id: $("#editId").val(),
+        nom: $("#editNom").val(),
+        prenom: $("#editPrenom").val(),
+        telephone: $("#editTelephone").val(),
+        departement: $("#editDepartement").val()
+    };
+
+    $.ajax({
+        url: `http://localhost:8080/SupTechBackEnd/employes/${formData.id}`,
+        type: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify(formData),
+        success: function(response) {
+            row.find('td').eq(1).text(formData.nom);
+            row.find('td').eq(2).text(formData.prenom);
+            row.find('td').eq(3).text(formData.telephone);
+            row.find('td').eq(4).text(formData.departement);
+            $("#editModal").modal("hide");
+        },
+        error: function(xhr, status, error) {
+            console.error('PUT request failed:', error);
+        }
+    });
+}
+
