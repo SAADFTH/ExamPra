@@ -14,21 +14,22 @@ function addEmployeeToTable(employe) {
     let telephone = $('<td>').text(employe.telephone);
     let departement = $('<td>').text(employe.departement);
     let actionTD = $('<td>');
+    let deleteButton = $('<button>');
     let editButton = $('<button>');
 
-    editButton.text('Modifier');
-    editButton.addClass('editButton btn btn-primary');
-    editButton.attr('onclick', 'openEditModal(event)');
-    actionTD.append(editButton);
-
-    let deleteButton = $('<button>');
     deleteButton.text('Supprimer');
-    deleteButton.addClass('deleteButton btn btn-danger');
+    deleteButton.addClass('deleteButton');
     deleteButton.attr('onclick', 'openModal(event)');
     actionTD.append(deleteButton);
 
+    let editActionTD = $('<td>');
+    editButton.text('Modifier');
+    editButton.addClass('editButton');
+    editButton.on('click', openEditModal);
+    editActionTD.append(editButton);
+
     let ligne = $('<tr>');
-    ligne.append(id, nom, prenom, telephone, departement, actionTD);
+    ligne.append(id, nom, prenom, telephone, departement, editActionTD, actionTD);
     $('#employeeTable tbody').append(ligne);
 }
 
@@ -75,13 +76,13 @@ function deleteEmploye(e) {
     };
 
     $.ajax({
-        url: `http://localhost:8080/SupTechBackEnd/employes/${formData.id}`,
+        url: 'http://localhost:8080/SupTechBackEnd/employes',
         type: 'DELETE',
         contentType: 'application/json',
         data: JSON.stringify(formData),
         success: function(response) {
             e.target.parentElement.parentElement.remove();
-            $("#confirmModal").modal("hide");
+            $("#confirmModal").modal("hide"); // Cacher le modal après avoir supprimé l'employé
         },
         error: function(xhr, status, error) {
             console.error('DELETE request failed:', error);
@@ -106,7 +107,7 @@ function openEditModal(e) {
     $("#editModal").modal("show");
     $("#saveEdit").off("click").on("click", () => {
         saveEdit(row);
-    });
+    });    
 }
 
 function saveEdit(row) {
@@ -135,4 +136,3 @@ function saveEdit(row) {
         }
     });
 }
-
