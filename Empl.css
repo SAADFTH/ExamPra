@@ -1,117 +1,82 @@
-/* Styles basiques pour le tableau */
-table {
-    border-collapse: collapse;
-    width: 100%;
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
 }
 
-th, td {
-    border: 1px solid black;
+h1 {
+    color: #333;
+}
+
+#container {
+    margin-top: 20px;
+}
+
+#employeeTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#employeeTable th, #employeeTable td {
+    border: 1px solid #ddd;
     padding: 8px;
+}
+
+#employeeTable th {
+    background-color: #f2f2f2;
     text-align: left;
 }
 
-/* Conteneur pour le tableau et le formulaire */
-#container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+.deleteButton {
+    background-color: #f44336; /* Red */
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
 }
 
-/* Styles pour le formulaire d'ajout */
+.editButton {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
 #addEmployeeForm {
-    margin-top: -35px;
-    width: 35%; /* Ajustez cette largeur selon vos besoins */
+    margin-top: 20px;
+    width: 400px; /* ou toute autre largeur souhaitée */
 }
 
 #addEmployeeForm label {
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
-#addEmployeeForm input[type="text"] {
+#addEmployeeForm input {
     width: 100%;
     padding: 8px;
     margin-bottom: 10px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
 }
 
 #addEmployeeForm input[type="submit"] {
+    width: auto;
     background-color: #4CAF50;
     color: white;
-    padding: 10px 20px;
     border: none;
     cursor: pointer;
+    padding: 10px 20px;
 }
 
-/* Styles pour le tableau */
-#employeeTable {
-    width: 45%; /* Ajustez cette largeur selon vos besoins */
-}
-/* Style du modal */
-#editModal {
-    display: none; /* Par défaut, le modal est caché */
-    position: fixed; /* Position fixe pour le modal */
-    z-index: 1; /* Mettre le modal au-dessus de tout le reste */
-    left: 0;
-    top: 0;
-    width: 100%; /* Largeur pleine */
-    height: 100%; /* Hauteur pleine */
-    overflow: auto; /* Ajouter un défilement si nécessaire */
-    background-color: rgb(0,0,0); /* Fallback pour les navigateurs qui ne supportent pas rgba */
-    background-color: rgba(0,0,0,0.4); /* Couleur de fond semi-transparente */
-}
-
-/* Conteneur du modal */
-#editModal .modal-content {
-    background-color: #fefefe; /* Fond blanc */
-    margin: 15% auto; /* Centrer verticalement et horizontalement */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Largeur du contenu */
-}
-
-/* Style des champs du formulaire */
-#editModal input[type=text], 
-#editModal input[type=tel] {
-    width: 100%; /* Largeur pleine */
-    padding: 12px 20px; /* Espacement interne */
-    margin: 8px 0; /* Espacement externe */
-    display: inline-block;
-    border: 1px solid #ccc; /* Bordure grise */
-    border-radius: 4px; /* Coins arrondis */
-    box-sizing: border-box; /* Taille de la boîte inclut le padding et la bordure */
-}
-
-/* Style du bouton de fermeture du modal */
-#editModal .close {
-    color: #aaa; /* Couleur du texte */
-    float: right; /* Alignement à droite */
-    font-size: 28px;
-    font-weight: bold;
-}
-
-/* Style du bouton de fermeture au survol */
-#editModal .close:hover,
-#editModal .close:focus {
-    color: black; /* Changement de couleur au survol */
-    text-decoration: none; /* Pas de soulignement */
-    cursor: pointer; /* Curseur pointer */
-}
-
-/* Style du bouton de soumission */
-#editModal .submitBtn {
-    background-color: #4CAF50; /* Couleur de fond verte */
-    color: white; /* Couleur du texte */
-    padding: 14px 20px; /* Espacement interne */
-    margin: 8px 0; /* Espacement externe */
-    border: none; /* Pas de bordure */
-    border-radius: 4px; /* Coins arrondis */
-    cursor: pointer; /* Curseur pointer */
-    width: 100%; /* Largeur pleine */
-}
-
-/* Style du bouton de soumission au survol */
-#editModal .submitBtn:hover {
-    background-color: #45a049; /* Changement de couleur de fond au survol */
+#addEmployeeForm input[type="submit"]:hover {
+    background-color: #45a049;
 }
